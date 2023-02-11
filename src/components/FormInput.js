@@ -1,17 +1,25 @@
-import React from "react";
+import React,{useState} from "react";
 import { Row, Form, Button, Col } from "react-bootstrap";
-
-export const FormInput = () => {
+import { questions } from "../data";
+export const FormInput = ({onAdd}) => {
+    const [question,setQuestion] = useState('');
+    const [answer,setAnswer] = useState('');
+    const addNewItem = ()=>{
+        questions.push({id:Math.random(),question:question,answer:answer});
+        setQuestion('');
+        setAnswer('');
+        onAdd();
+    }
   return (
     <Row>
       <Col sm="5">
-        <Form.Control type="text" placeholder="Enter Your Question" />
+        <Form.Control value={question} onChange={(e)=>setQuestion(e.target.value)} type="text" placeholder="Enter Your Question" />
       </Col>
       <Col sm="5">
-        <Form.Control type="text" placeholder="Enter Your Answer" />
+        <Form.Control value={answer} onChange={(e)=>setAnswer(e.target.value)} type="text" placeholder="Enter Your Answer" />
       </Col>
       <Col sm="2">
-        <Button variant="primary" className="w-100" type="submit">
+        <Button onClick={addNewItem} variant="primary" className="w-100" type="submit">
           Add
         </Button>
       </Col>
